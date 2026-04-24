@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gabriel Vinicius — Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --bg2: #111113;
+    --bg3: #18181c;
+    --border: #222228;
+    --amber: #f59e0b;
+    --amber-dim: #b45309;
+    --amber-glow: rgba(245,158,11,0.12);
+    --text: #e8e6e0;
+    --muted: #6b6a66;
+    --muted2: #3a3a40;
+    --white: #fafaf8;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; overflow-x: hidden; cursor: none; }
+  .cursor { position: fixed; width: 10px; height: 10px; background: var(--amber); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s ease; }
+  .cursor-ring { position: fixed; width: 32px; height: 32px; border: 1.5px solid rgba(245,158,11,0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.15s ease, width 0.2s, height 0.2s, opacity 0.2s; }
+  body::after { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 3rem; background: rgba(10,10,11,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--amber); letter-spacing: 0.15em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--amber); }
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 8rem 3rem 4rem; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -200px; right: -200px; width: 700px; height: 700px; background: radial-gradient(circle, rgba(245,158,11,0.07) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 1.4rem; display: flex; align-items: center; gap: 0.8rem; }
+  .hero-eyebrow::before { content: ''; display: inline-block; width: 32px; height: 1px; background: var(--amber); }
+  .hero-name { font-family: 'DM Serif Display', serif; font-size: clamp(3.5rem, 6vw, 6rem); line-height: 1.0; color: var(--white); margin-bottom: 0.3rem; }
+  .hero-name em { color: var(--amber); font-style: italic; }
+  .hero-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.2rem, 2.5vw, 2rem); color: var(--muted); font-style: italic; margin-bottom: 2rem; }
+  .hero-desc { font-size: 0.95rem; line-height: 1.8; color: var(--muted); max-width: 460px; margin-bottom: 2.5rem; }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--amber); color: #000; font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.85rem 1.8rem; border: none; text-decoration: none; cursor: none; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .btn-primary:hover { background: #fbbf24; transform: translateY(-2px); }
+  .btn-ghost { border: 1px solid var(--muted2); color: var(--muted); font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.85rem 1.8rem; text-decoration: none; cursor: none; transition: border-color 0.2s, color 0.2s; display: inline-block; }
+  .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); align-self: center; max-width: 420px; margin-left: auto; }
+  .stat-block { background: var(--bg2); padding: 2rem 1.8rem; position: relative; overflow: hidden; transition: background 0.2s; }
+  .stat-block:hover { background: var(--bg3); }
+  .stat-block::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--amber); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
+  .stat-block:hover::after { transform: scaleX(1); }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 2.4rem; color: var(--amber); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  section { padding: 6rem 3rem; }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.6rem; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); color: var(--white); line-height: 1.1; margin-bottom: 1rem; }
+  .section-title em { color: var(--amber); font-style: italic; }
+  #skills { background: var(--bg2); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 3.5rem; }
+  .skill-card { background: var(--bg); padding: 2rem; transition: background 0.2s; position: relative; }
+  .skill-card:hover { background: var(--bg3); }
+  .skill-icon { width: 40px; height: 40px; background: var(--amber-glow); border: 1px solid rgba(245,158,11,0.25); display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; font-size: 1.1rem; }
+  .skill-name { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; padding: 0.25rem 0.6rem; border: 1px solid var(--muted2); color: var(--muted); background: transparent; text-transform: uppercase; }
+  .skill-bar-wrap { margin-top: 1rem; height: 2px; background: var(--muted2); position: relative; overflow: hidden; }
+  .skill-bar-fill { height: 100%; background: var(--amber); width: 0%; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+  #projects { background: var(--bg); }
+  .projects-intro { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; flex-wrap: wrap; gap: 1.5rem; }
+  .projects-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .proj-card { background: var(--bg2); padding: 2.2rem; position: relative; overflow: hidden; transition: background 0.25s; cursor: none; }
+  .proj-card:hover { background: var(--bg3); }
+  .proj-card--wide { grid-column: span 7; }
+  .proj-card--narrow { grid-column: span 5; }
+  .proj-card--full { grid-column: span 12; }
+  .proj-stripe { position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--amber); transform: scaleY(0); transform-origin: top; transition: transform 0.3s ease; }
+  .proj-card:hover .proj-stripe { transform: scaleY(1); }
+  .proj-number { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--amber-dim); margin-bottom: 1.5rem; }
+  .proj-tool-badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); border: 1px solid rgba(245,158,11,0.3); padding: 0.3rem 0.75rem; background: var(--amber-glow); margin-bottom: 1.2rem; }
+  .proj-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--white); margin-bottom: 0.8rem; line-height: 1.2; }
+  .proj-desc { font-size: 0.85rem; line-height: 1.75; color: var(--muted); margin-bottom: 1.5rem; }
+  .proj-highlights { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 1.8rem; }
+  .proj-highlights li { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); display: flex; align-items: flex-start; gap: 0.6rem; }
+  .proj-highlights li::before { content: '→'; color: var(--amber); flex-shrink: 0; margin-top: 0.05em; }
+  .proj-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 1.2rem; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 0.8rem; }
+  .proj-stack { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .proj-link { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); text-decoration: none; display: flex; align-items: center; gap: 0.4rem; transition: gap 0.2s; }
+  .proj-link:hover { gap: 0.8rem; }
+  #about { background: var(--bg2); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-top: 3.5rem; align-items: start; }
+  .about-body { font-size: 0.92rem; line-height: 1.85; color: var(--muted); }
+  .about-body p { margin-bottom: 1.2rem; }
+  .about-body strong { color: var(--text); font-weight: 600; }
+  .timeline { position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1px; background: var(--border); }
+  .tl-item { padding-left: 2rem; padding-bottom: 2.5rem; position: relative; }
+  .tl-item::before { content: ''; position: absolute; left: -4px; top: 8px; width: 9px; height: 9px; background: var(--amber); border-radius: 50%; box-shadow: 0 0 12px rgba(245,158,11,0.4); }
+  .tl-date { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; color: var(--amber); text-transform: uppercase; margin-bottom: 0.4rem; }
+  .tl-role { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.2rem; }
+  .tl-place { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .tl-desc { font-size: 0.82rem; line-height: 1.65; color: var(--muted); }
+  #contact { background: var(--bg); }
+  .contact-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+  .contact-inner .section-title { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 1rem; }
+  .contact-inner .section-label { justify-content: center; display: flex; }
+  .contact-sub { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 3rem; }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
+  .contact-pill { display: flex; align-items: center; gap: 0.7rem; font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); text-decoration: none; padding: 0.9rem 1.5rem; border: 1px solid var(--border); background: var(--bg2); transition: border-color 0.2s, color 0.2s, background 0.2s; }
+  .contact-pill:hover { border-color: var(--amber); color: var(--amber); background: var(--amber-glow); }
+  .contact-pill svg { width: 14px; height: 14px; }
+  footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  footer span { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; color: var(--muted); }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--amber-dim); }
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
+    .hero-stats { margin-left: 0; max-width: 100%; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .proj-card--wide, .proj-card--narrow { grid-column: span 12; }
+    footer { padding: 1.5rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+  <section id="projects">
+  <div class="projects-intro reveal">
+    <div>
+      <div class="section-label">Portfólio</div>
+      <h2 class="section-title">Projetos <em>reais</em></h2>
+    </div>
+    <a href="https://github.com/Bielhxz08" target="_blank" class="btn-ghost">Ver todos no GitHub →</a>
+  </div>
+  <div class="projects-grid">
+    <div class="proj-card proj-card--wide reveal">
+      <div class="proj-stripe"></div>
+      <div class="proj-number">01 / 03</div>
+      <div class="proj-tool-badge">📊 Power BI</div>
+      <h3 class="proj-title">Amazon Sales Dashboard</h3>
+      <p class="proj-desc">Dashboard completo de análise de vendas da Amazon com múltiplas páginas, segmentações por categoria, região e período.</p>
+      <ul class="proj-highlights">
+        <li>Análise de receita por categoria de produto</li>
+        <li>Mapa de calor de vendas por região geográfica</li>
+        <li>KPIs de conversão e ticket médio com DAX</li>
+        <li>Filtros interativos com slicers dinâmicos</li>
+      </ul>
+      <div class="proj-footer">
+        <div class="proj-stack"><span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">Data Model</span></div>
+        <a href="https://github.com/Bielhxz08" target="_blank" class="proj-link">Ver projeto →</a>
+      </div>
+    </div>
+    <div class="proj-card proj-card--narrow reveal">
+      <div class="proj-stripe"></div>
+      <div class="proj-number">02 / 03</div>
+      <div class="proj-tool-badge">📊 Power BI</div>
+      <h3 class="proj-title">Chocolate Sales Analysis</h3>
+      <p class="proj-desc">Relatório de vendas de chocolates com análise de performance por vendedor, produto e período.</p>
+      <ul class="proj-highlights">
+        <li>Ranking de vendedores com medidas DAX</li>
+        <li>Análise de sazonalidade mensal</li>
+        <li>Metas vs. realizado por produto</li>
+      </ul>
+      <div class="proj-footer">
+        <div class="proj-stack"><span class="tag">Power BI</span><span class="tag">DAX</span></div>
+        <a href="https://github.com/Bielhxz08" target="_blank" class="proj-link">Ver →</a>
+      </div>
+    </div>
+    <div class="proj-card proj-card--full reveal">
+      <div class="proj-stripe"></div>
+      <div class="proj-number">03 / 03</div>
+      <div class="proj-tool-badge">📊 Power BI</div>
+      <h3 class="proj-title">University Data</h3>
+      <p class="proj-desc">Dashboard universitário com indicadores acadêmicos, distribuição de alunos por curso e análise de desempenho institucional.</p>
+      <ul class="proj-highlights" style="flex-direction: row; flex-wrap: wrap; gap: 0.6rem 2.5rem;">
+        <li>Distribuição por curso e semestre</li>
+        <li>Indicadores de evasão e aprovação</li>
+        <li>Modelagem de relacionamentos entre tabelas</li>
+        <li>Filtros dinâmicos por período e departamento</li>
+      </ul>
+      <div class="proj-footer">
+        <div class="proj-stack"><span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">Relacionamentos</span></div>
+        <a href="https://github.com/Bielhxz08" target="_blank" class="proj-link">Ver projeto completo →</a>
+      </div>
+    </div>
+  </div>
+</section>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<nav>
+  <div class="nav-logo">GVinicius — Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projetos</a></li>
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#contact">Contato</a></li>
+  </ul>
+</nav>
+<section class="hero" id="home">
+  <div class="hero-content reveal">
+    <div class="hero-eyebrow">Data Analyst · BI · Python</div>
+    <h1 class="hero-name">Gabriel<br><em>Vinicius</em></h1>
+    <p class="hero-title">Transformando dados em decisões</p>
+    <p class="hero-desc">Estudante de Análise e Desenvolvimento de Sistemas na Estácio de Sá, Duque de Caxias — RJ. Apaixonado por dados, construindo dashboards e pipelines que geram insights reais para negócios.</p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">Ver Projetos</a>
+      <a href="https://github.com/Bielhxz08" target="_blank" class="btn-ghost">GitHub →</a>
+    </div>
+  </div>
+  <div class="hero-stats reveal">
+    <div class="stat-block"><div class="stat-num">3+</div><div class="stat-label">Projetos no Portfólio</div></div>
+    <div class="stat-block"><div class="stat-num">4</div><div class="stat-label">Ferramentas Dominadas</div></div>
+    <div class="stat-block"><div class="stat-num">BI</div><div class="stat-label">Power BI & DAX</div></div>
+    <div class="stat-block"><div class="stat-num">Dez<small style="font-size:1rem">2026</small></div><div class="stat-label">Formatura Prevista</div></div>
+  </div>
+</section>
+<section id="skills">
+  <div class="section-label">Competências</div>
+  <h2 class="section-title">Stack <em>técnico</em></h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal"><div class="skill-icon">📊</div><div class="skill-name">Power BI</div><p style="font-size:0.82rem;color:var(--muted);line-height:1.6">Dashboards interativos, DAX avançado, modelagem de dados e publicação de relatórios.</p><div class="skill-tags"><span class="tag">DAX</span><span class="tag">Data Model</span><span class="tag">KPI</span></div><div class="skill-bar-wrap"><div class="skill-bar-fill" data-width="88"></div></div></div>
+    <div class="skill-card reveal"><div class="skill-icon">🐍</div><div class="skill-name">Python</div><p style="font-size:0.82rem;color:var(--muted);line-height:1.6">Pandas, Matplotlib, Plotly e Seaborn para análise, limpeza e visualização de dados.</p><div class="skill-tags"><span class="tag">Pandas</span><span class="tag">Plotly</span><span class="tag">Jupyter</span></div><div class="skill-bar-wrap"><div class="skill-bar-fill" data-width="80"></div></div></div>
+    <div class="skill-card reveal"><div class="skill-icon">🗄️</div><div class="skill-name">SQL</div><p style="font-size:0.82rem;color:var(--muted);line-height:1.6">Queries complexas, joins, subqueries e análise de dados em SQL Server e SQLite.</p><div class="skill-tags"><span class="tag">SQL Server</span><span class="tag">SQLite</span><span class="tag">Queries</span></div><div class="skill-bar-wrap"><div class="skill-bar-fill" data-width="75"></div></div></div>
+    <div class="skill-card reveal"><div class="skill-icon">📗</div><div class="skill-name">Excel</div><p style="font-size:0.82rem;color:var(--muted);line-height:1.6">Tabelas dinâmicas, fórmulas avançadas, tratamento e organização de dados.</p><div class="skill-tags"><span class="tag">Pivot Table</span><span class="tag">Fórmulas</span><span class="tag">Dashboards</span></div><div class="skill-bar-wrap"><div class="skill-bar-fill" data-width="78"></div></div></div>
+  </div>
+</section>
+<section id="about">
+  <div class="section-label">Sobre mim</div>
+  <h2 class="section-title">Dados são <em>histórias</em><br>esperando para serem contadas</h2>
+  <div class="about-grid">
+    <div class="about-body reveal">
+      <p>Sou <strong>Gabriel Vinicius</strong>, estudante de Análise e Desenvolvimento de Sistemas na <strong>Estácio de Sá</strong>, com previsão de formatura em dezembro de 2026. Minha jornada com dados começou pela curiosidade de entender o que os números escondem — e hoje transformo isso em dashboards, análises e insights.</p>
+      <p>Tenho experiência como <strong>Jovem Aprendiz em concessionária de rodovias</strong>, onde apliquei habilidades analíticas em contexto profissional real. Acredito que bons dados, bem apresentados, têm o poder de mudar decisões.</p>
+      <p>Atualmente busco uma oportunidade de <strong>estágio em Data Analytics ou BI</strong> para crescer dentro de uma equipe de dados e contribuir com projetos que gerem impacto real.</p>
+    </div>
+    <div class="reveal">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">Dez 2026 (prev.)</div>
+          <div class="tl-role">Bacharel em ADS</div>
+          <div class="tl-place">Estácio de Sá — Duque de Caxias, RJ</div>
+          <div class="tl-desc">Análise e Desenvolvimento de Sistemas com foco em dados, BI e automação.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2024 — atual</div>
+          <div class="tl-role">Jovem Aprendiz</div>
+          <div class="tl-place">Concessionária de Rodovias — RJ</div>
+          <div class="tl-desc">Aplicação de ferramentas analíticas e Excel em processos operacionais da empresa.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2023 — hoje</div>
+          <div class="tl-role">Projetos Independentes de Data</div>
+          <div class="tl-place">GitHub — Bielhxz08</div>
+          <div class="tl-desc">Desenvolvimento contínuo de projetos de análise com Python, SQL e Power BI publicados no GitHub.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label">Contato</div>
+    <h2 class="section-title">Vamos <em>conversar?</em></h2>
+    <p class="contact-sub reveal">Estou disponível para estágios, projetos e colaborações em Data Analytics e BI.<br>Se você tem um desafio com dados, me manda uma mensagem.</p>
+    <div class="contact-links reveal">
+      <a href="https://github.com/Bielhxz08" target="_blank" class="contact-pill">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="mailto:gabriel@email.com" class="contact-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email
+      </a>
+      <a href="https://linkedin.com/in/gabriel-vinicius" target="_blank" class="contact-pill">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</section>
+<footer>
+  <span>© 2025 Gabriel Vinicius — Data Analyst Portfolio</span>
+  <span>Duque de Caxias, RJ · Brasil</span>
+</footer>
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 60);
+  });
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => { if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), i * 80); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+  const bars = document.querySelectorAll('.skill-bar-fill');
+  const barObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.width = entry.target.dataset.width + '%'; } });
+  }, { threshold: 0.3 });
+  bars.forEach(b => barObserver.observe(b));
+  document.querySelectorAll('a, button, .proj-card, .skill-card, .stat-block').forEach(el => {
+    el.addEventListener('mouseenter', () => { ring.style.width = '52px'; ring.style.height = '52px'; ring.style.opacity = '0.6'; });
+    el.addEventListener('mouseleave', () => { ring.style.width = '32px'; ring.style.height = '32px'; ring.style.opacity = '1'; });
+  });
+</script>
+</body>
+</html>
